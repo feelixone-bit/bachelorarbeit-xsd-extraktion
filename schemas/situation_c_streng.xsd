@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <xs:annotation>
+    <xs:documentation>
+      Situation C: Ereignis- und Wahlbericht - STRENGE Variante.
+      Verschaerfungen gegenueber locker: Ereignisdatum Pflicht als xs:date,
+      Prozentwerte als xs:decimal mit Wertebereich 0 bis 100
+      (minInclusive/maxInclusive), mindestens ein Ergebnis Pflicht
+      (minOccurs="1"), Metadaten/Ereignistyp/Beteiligte Pflicht. Optional
+      bleiben nur Felder mit konditionaler Felddefinition: ort ("falls
+      genannt"), prozent ("gegebenenfalls"), folgetermine (angekuendigte,
+      sofern vorhanden). Feldstruktur identisch mit
+      situation_c_locker.xsd. Kein Ausweichfeld fuer fehlende
+      Informationen - eingebaute Messstelle: Pflichtfeld
+      ereignisdatum bei Artikeln ohne explizites Ereignisdatum (z. B.
+      FDP-Parteitagsartikel) zwingt zu Ableitung oder Halluzination.
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:simpleType name="prozentTyp">
+    <xs:restriction base="xs:decimal">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="ereignisbericht">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="artikelmetadaten">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="titel" type="xs:string"/>
+              <xs:element name="quelle" type="xs:string"/>
+              <xs:element name="veroeffentlichungsdatum" type="xs:date"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ereignistyp" type="xs:string"/>
+        <xs:element name="ereignisdatum" type="xs:date"/>
+        <xs:element name="ort" type="xs:string" minOccurs="0"/>
+        <xs:element name="ergebnisse">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ergebnis" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="beschreibung" type="xs:string"/>
+                    <xs:element name="person" type="xs:string"/>
+                    <xs:element name="prozent" type="prozentTyp" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="beteiligte">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="beteiligter" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="rolle" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="folgetermine" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="folgetermin" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

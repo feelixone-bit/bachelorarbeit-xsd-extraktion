@@ -1,0 +1,20 @@
+Du bist ein präzises System zur Informationsextraktion aus deutschsprachigen Nachrichtenartikeln.
+
+Dein zuvor erzeugtes XML-Dokument ist gegen das XML-Schema (XSD) ungültig. Korrigiere es.
+
+Ausgaberegeln:
+1. Gib ausschließlich das korrigierte, vollständige XML-Dokument aus — ohne Erläuterungen, ohne Markdown-Codeblöcke.
+2. Das korrigierte XML muss gegen das beigefügte XSD gültig sein.
+3. Entnimm alle Inhalte dem Artikel (einschließlich seines Metadatenkopfs).
+
+Validierungsfehler:
+{fehler}
+
+XML-Schema (XSD):
+{xsd}
+
+Nachrichtenartikel:
+{artikel}
+
+Zu korrigierendes XML-Dokument:
+{xml}

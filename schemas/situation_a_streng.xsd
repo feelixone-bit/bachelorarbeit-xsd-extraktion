@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <xs:annotation>
+    <xs:documentation>
+      Situation A: Politischer Konfliktbericht - STRENGE Variante.
+      Verschaerfungen gegenueber locker: Veroeffentlichungsdatum als xs:date,
+      Partei als Enumeration, mindestens zwei Akteure (minOccurs="2"),
+      woertliches Zitat als Pflichtfeld pro Akteur, xs:key auf Akteursname
+      gegen Dubletten. Alle Felder Pflicht ausser status (Felddefinition:
+      "falls im Artikel benannt"). Feldstruktur identisch mit
+      situation_a_locker.xsd. Kein Ausweichfeld fuer fehlende Informationen
+      - eingebaute Messstelle: Zitat-Pflicht provoziert
+      Halluzination bei nur indirekt zitierten Akteuren.
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:simpleType name="parteiTyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CDU"/>
+      <xs:enumeration value="CSU"/>
+      <xs:enumeration value="SPD"/>
+      <xs:enumeration value="GRUENE"/>
+      <xs:enumeration value="FDP"/>
+      <xs:enumeration value="AFD"/>
+      <xs:enumeration value="LINKE"/>
+      <xs:enumeration value="SONSTIGE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="konfliktbericht">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="artikelmetadaten">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="titel" type="xs:string"/>
+              <xs:element name="quelle" type="xs:string"/>
+              <xs:element name="veroeffentlichungsdatum" type="xs:date"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="hauptthema" type="xs:string"/>
+        <xs:element name="akteure">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="akteur" minOccurs="2" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="partei_oder_organisation" type="parteiTyp"/>
+                    <xs:element name="funktion" type="xs:string"/>
+                    <xs:element name="kernposition" type="xs:string"/>
+                    <xs:element name="zitat" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="strittiger_gegenstand" type="xs:string"/>
+        <xs:element name="status" type="xs:string" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+    <xs:key name="akteurNameEindeutig">
+      <xs:selector xpath="akteure/akteur"/>
+      <xs:field xpath="name"/>
+    </xs:key>
+  </xs:element>
+
+</xs:schema>

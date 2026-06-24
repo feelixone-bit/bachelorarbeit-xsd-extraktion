@@ -1,0 +1,12 @@
+# Kernbibliotheken der Extraktions-Pipeline.
+# Versionen werden nach erfolgreicher Installation via `pip freeze` in
+# requirements.lock.txt gepinnt (Reproduzierbarkeit).
+
+google-genai      # Gemini-API (Untersuchungsmodell)
+xmlschema         # XSD-Validierung
+pandas            # Auswertung der CSV-Ergebnisdateien
+pyyaml            # Goldstandard-Format (eine YAML-Datei pro Artikel)
+trafilatura       # nur fuer den Trafilatura-Demonstrator
+python-dotenv     # .env-Ladelogik fuer GEMINI_API_KEY
+# Hilfsbibliothek der Auswertung (to_markdown)
+tabulate

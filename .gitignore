@@ -1,0 +1,16 @@
+# Geheimnisse — niemals committen
+.env
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Lokal erzeugte bzw. nicht-öffentliche Daten (urheberrechtlich geschützt oder generiert).
+# Nur das Manifest und die README im corpus/-Ordner werden versioniert.
+corpus/article_*.txt
+corpus/*_nachgeladen.txt
+goldstandard/
+runs/
+results/
+demonstrator/

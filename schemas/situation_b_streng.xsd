@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <xs:annotation>
+    <xs:documentation>
+      Situation B: Wirtschafts- und Kennzahlenmeldung - STRENGE Variante.
+      Verschaerfungen gegenueber locker: Wert als xs:decimal (Dezimalpunkt
+      erforderlich, deutsches Komma ist ein Typfehler), Einheit als
+      Enumeration (EURO, PROZENT, PERSONEN, STUECK, SONSTIGE), Werttyp als
+      Enumeration (IST, PLAN, FORDERUNG, ALTWERT), Bezugszeitraum als
+      xs:gYear (erzwingt Normalisierung auf ein Jahr), mindestens eine
+      Kennzahl Pflicht (minOccurs="1"), alle Felder Pflicht. Feldstruktur
+      identisch mit situation_b_locker.xsd. Kein Ausweichfeld fuer
+      fehlende Informationen - eingebaute Messstelle:
+      strenge Typisierung erzwingt Normalisierung und macht
+      Praezisionsverlust messbar (Referenz: unsignedByte-Fall aus dem
+      Professor-Beispiel report.xsd).
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:simpleType name="einheitTyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EURO"/>
+      <xs:enumeration value="PROZENT"/>
+      <xs:enumeration value="PERSONEN"/>
+      <xs:enumeration value="STUECK"/>
+      <xs:enumeration value="SONSTIGE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="werttypTyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="IST"/>
+      <xs:enumeration value="PLAN"/>
+      <xs:enumeration value="FORDERUNG"/>
+      <xs:enumeration value="ALTWERT"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="kennzahlenmeldung">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="artikelmetadaten">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="titel" type="xs:string"/>
+              <xs:element name="quelle" type="xs:string"/>
+              <xs:element name="veroeffentlichungsdatum" type="xs:date"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="organisation_oder_programm" type="xs:string"/>
+        <xs:element name="kennzahlen">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="kennzahl" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="bezeichnung" type="xs:string"/>
+                    <xs:element name="wert" type="xs:decimal"/>
+                    <xs:element name="einheit" type="einheitTyp"/>
+                    <xs:element name="bezugszeitraum" type="xs:gYear"/>
+                    <xs:element name="werttyp" type="werttypTyp"/>
+                    <xs:element name="zahlenquelle" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

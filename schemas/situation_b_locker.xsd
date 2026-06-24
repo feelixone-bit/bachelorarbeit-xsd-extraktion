@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <xs:annotation>
+    <xs:documentation>
+      Situation B: Wirtschafts- und Kennzahlenmeldung - LOCKERE Variante.
+      Regel: Wert als xs:string, alle Felder optional, keine Formatvorgaben.
+      Feldstruktur identisch mit situation_b_streng.xsd; Unterschiede nur
+      in Typisierung, Pflichtgraden und Constraints. Designentscheidung:
+      zahlenquelle ("wer nennt die Zahl") ist pro Kennzahl modelliert, da ein
+      Artikel Zahlen aus mehreren Quellen enthalten kann. bezugszeitraum
+      nimmt in dieser Variante freien Text auf (z. B. "Wintersemester
+      2026/27", "Q3 2025"). Kein Ausweichfeld fuer fehlende Informationen
+     .
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:element name="kennzahlenmeldung">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="artikelmetadaten" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="titel" type="xs:string" minOccurs="0"/>
+              <xs:element name="quelle" type="xs:string" minOccurs="0"/>
+              <xs:element name="veroeffentlichungsdatum" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="organisation_oder_programm" type="xs:string" minOccurs="0"/>
+        <xs:element name="kennzahlen" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="kennzahl" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="bezeichnung" type="xs:string" minOccurs="0"/>
+                    <xs:element name="wert" type="xs:string" minOccurs="0"/>
+                    <xs:element name="einheit" type="xs:string" minOccurs="0"/>
+                    <xs:element name="bezugszeitraum" type="xs:string" minOccurs="0"/>
+                    <xs:element name="werttyp" type="xs:string" minOccurs="0"/>
+                    <xs:element name="zahlenquelle" type="xs:string" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
